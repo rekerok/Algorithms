@@ -71,9 +71,13 @@ def check_time(arr: List[List], func):
             end = process_time()
             run_time = end - start
             # print(f"k = {k}\ttime = {'{:.0f}'.format(run_time)} seconds")
-            print("k = {:d}\ttime = {:,.25f}".format(k,run_time))
+            print("k = {:d}\ttime = {:,.25f}".format(k, run_time))
             list_time[run_time] = k
         print(f"best k for this list is {list_time[min(list_time.keys())]}")
+
+
+def generate_list_range(min: int, max: int, len: int) -> List[int]:
+    return list(random.randint(min, max, ) for i in range(len))
 
 
 # R - количество массивов
@@ -82,7 +86,7 @@ def check_time(arr: List[List], func):
 def generate_list(args: Dict) -> List[List]:
     list_arrays = list()
     for i in range(args["R"]):
-        list_arrays.append(list(random.randint(0, args["M"]) for i in range(args["M"])))
+        list_arrays.append(generate_list_range(0, args['M'], args['N']))
     return list_arrays
 
 
