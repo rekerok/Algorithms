@@ -25,7 +25,7 @@ def insertion_sort(arr: list) -> list:
     return arr
 
 
-def hybrid_sort_quick_insertion(arr: List[int], k=5) -> List[int]:
+def hybrid_sort_quick_insertion(arr: List[int], k) -> List[int]:
     if len(arr) < 2:
         return arr
     pivot = arr[len(arr) // 2]
@@ -59,21 +59,43 @@ def hybrid_sort_merge_insertion(arr: List[int], k=5) -> List[int]:
         sorted_arr += right[j:]
     return sorted_arr
 
+# Функция считает лучшее 'k' для одного массива
+# def check_time(arr: List[List], func):
+#     for item in arr:
+#         print(f"\n{item}")
+#         print(func(item))
+#         list_time = {}
+#         for k in range(1, 15):
+#             start = process_time()
+#             func(item)
+#             end = process_time()
+#             run_time = end - start
+#             # print(f"k = {k}\ttime = {'{:.0f}'.format(run_time)} seconds")
+#             print("k = {:d}\ttime = {:,.25f}".format(k, run_time))
+#             list_time[run_time] = k
+#         print(f"best k for this list is {list_time[min(list_time.keys())]}")
 
+# Функция считает лучшее 'k' для кучи массивов
 def check_time(arr: List[List], func):
-    for item in arr:
-        print(f"\n{item}")
-        print(func(item))
-        list_time = {}
-        for k in range(1, 15):
+    best_k = 0
+    best_sum = None
+    for k in range(len(arr[0]) // 2):
+        sum_time = 0
+        print(f"k = {k}")
+        for j in arr:
+            print(f"\t{j}")
             start = process_time()
-            func(item)
+            print(f"\t{func(j, k)}")
             end = process_time()
             run_time = end - start
-            # print(f"k = {k}\ttime = {'{:.0f}'.format(run_time)} seconds")
-            print("k = {:d}\ttime = {:,.25f}".format(k, run_time))
-            list_time[run_time] = k
-        print(f"best k for this list is {list_time[min(list_time.keys())]}")
+            print("\trun_time = {:,.10f}\n".format(run_time))
+            sum_time += run_time
+        if not best_sum:
+            best_sum = sum_time
+        elif best_sum > sum_time:
+            best_sum = sum_time
+        print("k = {:d}\tsum_time = {:,.10f}\n".format(k, sum_time))
+    print("for this arrays best k is {:d} with time {:,10f}".format(best_k, best_sum))
 
 
 def generate_list_range(min: int, max: int, len: int) -> List[int]:
