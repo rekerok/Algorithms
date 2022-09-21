@@ -59,6 +59,7 @@ def hybrid_sort_merge_insertion(arr: List[int], k=5) -> List[int]:
         sorted_arr += right[j:]
     return sorted_arr
 
+
 # Функция считает лучшее 'k' для одного массива
 # def check_time(arr: List[List], func):
 #     for item in arr:
@@ -90,13 +91,12 @@ def check_time(arr: List[List], func):
             run_time = end - start
             print("\trun_time = {:,.10f}\n".format(run_time))
             sum_time += run_time
-        if not best_sum:
+        if not best_sum or best_sum > sum_time:
             best_sum = sum_time
-        elif best_sum > sum_time:
-            best_sum = sum_time
-        print("k = {:d}\tsum_time = {:,.10f}\n".format(k, sum_time))
-    print("for this arrays best k is {:d} with time {:,10f}".format(best_k, best_sum))
+            best_k = k
 
+        print("k = {:d}\tsum_time = {:,.10f}\n".format(k, sum_time))
+    print("for this arrays best k is {:d} with time {:,.10f}".format(best_k, best_sum))
 
 def generate_list_range(min: int, max: int, len: int) -> List[int]:
     return list(random.randint(min, max, ) for i in range(len))
@@ -122,6 +122,11 @@ def main(args: Dict[str, int]):
 # M - диапазон массивов
 if __name__ == "__main__":
     tmp = {}
-    for i in list(map(lambda x: x.split('='), sys.argv[1:])):
-        tmp[i[0]] = int(i[1])
+    if len(sys.argv) == 1:
+        tmp['R'] = int(input("R - количество массивов = "))
+        tmp['N'] = int(input("N длинна массивов = "))
+        tmp['M'] = int(input("M - диапазон массивов = "))
+    else:
+        for i in list(map(lambda x: x.split('='), sys.argv[1:])):
+            tmp[i[0]] = int(i[1])
     main(tmp)
