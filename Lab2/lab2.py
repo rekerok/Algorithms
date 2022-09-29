@@ -1,29 +1,32 @@
 import sys
-from typing import Dict, List, Union
+from typing import Dict, List
+
 from Lab1 import lab1
 
 
-def interpolationSearch(arr: List, item: int) -> bool:
-    if len(arr) == 1:
-        return False
-    else:
-        low = 0
-        height = len(arr) - 1
-        mid = low + ((item - arr[low]) * (height - low)) // (arr[height] - arr[low])
-        if mid > len(arr) - 1 or arr[mid] != item:
+def interpolation_search(arr: List, item: int) -> bool:
+    low = 0
+    high = len(arr) - 1
+    if low <= high:
+        arr.sort()
+        mid = low + ((item - arr[low]) * (high - low)) // (arr[high] - arr[low])
+        if mid < low or mid > high:
             return False
-        if item == arr[mid]:
+        if arr[mid] == item:
             return True
-        elif item < arr[mid]:
-            return interpolationSearch(arr[0:mid], item)
-        else:
-            return interpolationSearch(arr[mid:len(arr)], item)
+        if item < arr[mid]:
+            return interpolation_search(arr[low:mid + 1], item)
+        if item > arr[mid]:
+            return interpolation_search(arr[mid + 1:high], item)
+    else:
+        return False
 
 
 def binary_search(arr: List, item: int) -> bool:
     if len(arr) == 1:
         return False
     else:
+        arr.sort()
         mid = len(arr) // 2
         if item == arr[mid]:
             return True
@@ -38,8 +41,10 @@ def binary_search(arr: List, item: int) -> bool:
 # M - диапазон массива
 def main(args: Dict[str, int]):
     arr = lab1.generate_list_range(0, args['M'], args['N'])
-    print(interpolationSearch(
-        sorted([6, 1, 8, 1, 7, 5, 2, 5]), 5))
+    print(sorted(arr))
+    print(f"interpolation_search - {interpolation_search(arr, args['x'])}")
+    print(f"binary_search - {binary_search(arr, args['x'])}")
+    print(f"python_function - {args['x'] in arr}")
 
 
 # x - ключ по которому ищем
@@ -47,7 +52,11 @@ def main(args: Dict[str, int]):
 # M - диапазон массивов
 if __name__ == "__main__":
     tmp = {}
-    for i in list(map(lambda x: x.split('='), sys.argv[1:])):
-        tmp[i[0]] = int(i[1])
-    print(tmp)
+    if len(sys.argv) == 1:
+        tmp['x'] = int(input("x - ключ по которому ищем = "))
+        tmp['N'] = int(input("N - длинна массивов = "))
+        tmp['M'] = int(input("M - диапазон массивов = "))
+    else:
+        for i in list(map(lambda x: x.split('='), sys.argv[1:])):
+            tmp[i[0]] = int(i[1])
     main(tmp)
