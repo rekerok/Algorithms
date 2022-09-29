@@ -1,7 +1,8 @@
-import random
 import sys
 from time import process_time
 from typing import List, Dict
+
+import numpy as np
 
 
 def euclid_algorithm(a: int, b: int) -> int:
@@ -98,8 +99,10 @@ def check_time(arr: List[List], func):
         print("k = {:d}\tsum_time = {:,.10f}\n".format(k, sum_time))
     print("for this arrays best k is {:d} with time {:,.10f}".format(best_k, best_sum))
 
-def generate_list_range(min: int, max: int, len: int) -> List[int]:
-    return list(random.randint(min, max, ) for i in range(len))
+
+def generate_list_range(min_element: int, max_element: int, length_array: int) -> np.array:
+    return np.random.randint(min_element, max_element, length_array)
+    # return generate_list_range(0, 10, 100)
 
 
 # R - количество массивов
@@ -124,7 +127,7 @@ if __name__ == "__main__":
     tmp = {}
     if len(sys.argv) == 1:
         tmp['R'] = int(input("R - количество массивов = "))
-        tmp['N'] = int(input("N длинна массивов = "))
+        tmp['N'] = int(input("N - длинна массивов = "))
         tmp['M'] = int(input("M - диапазон массивов = "))
     else:
         for i in list(map(lambda x: x.split('='), sys.argv[1:])):
