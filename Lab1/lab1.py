@@ -61,22 +61,6 @@ def hybrid_sort_merge_insertion(arr: List[int], k=5) -> List[int]:
     return sorted_arr
 
 
-# Функция считает лучшее 'k' для одного массива
-# def check_time(arr: List[List], func):
-#     for item in arr:
-#         print(f"\n{item}")
-#         print(func(item))
-#         list_time = {}
-#         for k in range(1, 15):
-#             start = process_time()
-#             func(item)
-#             end = process_time()
-#             run_time = end - start
-#             # print(f"k = {k}\ttime = {'{:.0f}'.format(run_time)} seconds")
-#             print("k = {:d}\ttime = {:,.25f}".format(k, run_time))
-#             list_time[run_time] = k
-#         print(f"best k for this list is {list_time[min(list_time.keys())]}")
-
 # Функция считает лучшее 'k' для кучи массивов
 def check_time(arr: List[List], func):
     best_k = 0
@@ -101,7 +85,7 @@ def check_time(arr: List[List], func):
 
 
 def generate_list_range(min_element: int, max_element: int, length_array: int) -> np.array:
-    return np.random.randint(min_element, max_element, length_array)
+    return np.random.uniform(min_element, max_element, length_array).tolist()
     # return generate_list_range(0, 10, 100)
 
 
