@@ -85,8 +85,7 @@ def check_time(arr: List[List], func):
 
 
 def generate_list_range(min_element: int, max_element: int, length_array: int) -> np.array:
-    return np.random.uniform(min_element, max_element, length_array).tolist()
-    # return generate_list_range(0, 10, 100)
+    return np.random.randint(min_element, max_element, length_array).tolist()
 
 
 # R - количество массивов
