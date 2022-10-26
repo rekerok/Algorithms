@@ -7,24 +7,27 @@ from Lab1 import lab1
 def interpolation_search(arr: List, item: int) -> bool:
     low = 0
     high = len(arr) - 1
-    if low <= high:
-        arr.sort()
+    arr.sort()
+    if arr[low] == arr[high] and arr[low] != item:
+        return False
+    else:
         mid = low + ((item - arr[low]) * (high - low)) // (arr[high] - arr[low])
         if mid < low or mid > high:
             return False
+
         if arr[mid] == item:
             return True
+
         if item < arr[mid]:
-            return interpolation_search(arr[low:mid + 1], item)
-        if item > arr[mid]:
-            return interpolation_search(arr[mid + 1:high], item)
-    else:
-        return False
+            return interpolation_search(arr[low:mid], item)
+        else:
+            print(arr[mid:low])
+            return interpolation_search(arr[mid:high], item)
 
 
 def binary_search(arr: List, item: int) -> bool:
     if len(arr) == 1:
-        return False
+        return True if arr[0] == item else False
     else:
         arr.sort()
         mid = len(arr) // 2
